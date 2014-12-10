@@ -9,6 +9,7 @@ class fourBttn:
 		self.vsel = 0
 		self.opt = IntVar()
 		self.info = proofs
+		self.root.protocol("WM_DELETE_WINDOW", self.callback)
 		customblu='#%02x%02x%02x' % (27,60,191) #A little trick to get custom colors to work.
 		customgre='#%02x%02x%02x' % (26,181,81)
 		customyel='#%02x%02x%02x' % (245,241,17)
@@ -21,6 +22,9 @@ class fourBttn:
 		self.b.pack(side=LEFT, expand=1, fill=BOTH)
 		self.c.pack(side=LEFT, expand=1, fill=BOTH)
 		self.d.pack(side=LEFT, expand=1, fill=BOTH)
+	def callback(self):
+		self.root.quit()
+		self.root.destroy()
 	def seta(self):
 		self.vsel=self.v.get()
 		self.root.quit()
