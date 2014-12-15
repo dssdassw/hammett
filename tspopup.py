@@ -1,5 +1,4 @@
 from Tkinter import *
-import func
 
 class transcriptPopup:
 	def __init__(self, master, transcript):
