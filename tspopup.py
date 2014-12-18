@@ -3,7 +3,7 @@ from Tkinter import *
 class transcriptPopup:
 	def __init__(self, master, transcript):
 		self.root=master
-		self.root.geometry('300x200')
+		self.root.geometry('300x700')
 		frame=Frame(master)
 		frame.config(bg="white")
 		frame.pack()
