@@ -1,11 +1,11 @@
 from Tkinter import *
 
 class judgePopup:
-	def __init__(self, master, correctcombo, inputcombo, correctText, incorrectText):
+	def __init__(self, master, correctcombo, inputcombo, correctText, incorrectText, alt=None):
 		self.root=master
 		self.root.geometry('300x200')
 		frame=Frame(master)
-		if correctcombo == inputcombo:
+		if inputcombo == correctcombo or inputcombo == alt:
 			self.root.title("CORRECT!")
 			text=Message(self.root, text=correctText)
 			self.result=True

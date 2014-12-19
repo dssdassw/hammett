@@ -1,7 +1,7 @@
 from Tkinter import *
 
 class fourBttn:
-	def __init__(self, master, proofs):
+	def __init__(self, master, proofs): #after I created the twoBttn, I realized it would probably have been better to have the proof selection as a seperate window, but at the time, I didn't know I'd decide to make a similar window with only 2 choices.
 		self.root=master
 		frame = Frame(self.root)
 		frame.pack()
@@ -11,8 +11,8 @@ class fourBttn:
 		self.info = proofs
 		self.done = False
 		self.closed = False
-		self.imposter = False
-		self.root.protocol("WM_DELETE_WINDOW", self.callback)
+		self.imposter = False #Fugliest workaround NA.
+		self.root.protocol("WM_DELETE_WINDOW", self.callback) #When the even WM_DELETE_WINDOW occurs, this protocall is executed. WM_DELETE_WINDOW is obviously when the window manager, be it X, Windows, whatever, attempts to close the window.
 		customblu='#%02x%02x%02x' % (27,60,191) #A little trick to get custom colors to work.
 		customgre='#%02x%02x%02x' % (26,181,81)
 		customyel='#%02x%02x%02x' % (245,241,17)
@@ -42,6 +42,15 @@ class fourBttn:
 			a = Radiobutton(self.root, text=item, variable=self.v, value=self.info.index(item), command=self.setvar) #the text is the name of the item, each button puts output (I THINK) intanchoring W (so that they dont each get tabbed).
 			a.pack(anchor=W)
 		exitmsg=Message(self.root, text="After you've made your selection, it is safe to close this window via the X.")
+		"""
+		Regarding "After you've made your selection, it is safe to close this window via the X"...
+		If I don't do it this way, Tkinter decides to fail at returning the value for some reason, (and by 'fail', I mean not setting the variables to anything but 0 for... some reason. Instead,
+		the way I managed to was using a variable which the main window is always checking as long as I haven't destroyed this window.
+		I let the main window know this one has been destroyed (without using the messy and often broken root.state, which doesn't think instances of a class are still valid) by
+		using the self.root.protocol("WM_DELETE_WINDOW", self.callback) defined in the __init__ to call a callback when the window is closed that sets the variable self.closed to True.
+		Just because the user closed the window doesn't mean that they actually completed the forms though, and I was wary of that.
+		There is another variable, self.done, which is set to True when the user has selected a proof (and therefore is now done). I usually don't like using variables unless I actually have to, but in this case it was better to use them then to not.
+		"""
 		exitmsg.pack(anchor=S, fill=X, expand=1)
 		exitmsg.bind("<Configure>", lambda e: exitmsg.configure(width=e.width-10)) #this is to make the message fill the window width, even when it expands. Don't know why Tkinter doesn't have a function like this built into Message, but whatever.
 	def forget4(self): #"forgets" the four choices, but keeps them in memory just in case they need to be recalled. It's as close as Tkinter gets to deleting them.
@@ -61,5 +70,5 @@ class fourBttn:
 		self.opt.set(sel)
 		print '	four.opt =',self.opt.get()
 		self.proofmenu()
-		print "	v 1: " + str(self.v)
+		print '	v 1: ' + str(self.v)
 		return 0
